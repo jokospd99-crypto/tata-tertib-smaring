@@ -7,7 +7,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-    /* === LATAR UTAMA BERGERAK === */
+    /* === LATAR BERGERAK === */
     body {
       font-family: "Poppins", sans-serif;
       margin: 0;
@@ -58,7 +58,7 @@
       letter-spacing: 1px;
     }
 
-    /* === ANIMASI TITIK BERJALAN === */
+    /* === TITIK ANIMASI "..." === */
     #loading-text::after {
       content: '';
       display: inline-block;
@@ -184,6 +184,10 @@
   <div id="loader">
     <img src="https://i.ibb.co.com/Q7C0TZKh/SMAN1-Cluring-emblem.png" alt="SMAN1-Cluring-logo">
     <p id="loading-text">Memuat Dashboard</p>
+    <!-- MUSIK LEMBUT -->
+    <audio id="loading-music" autoplay loop>
+      <source src="https://cdn.pixabay.com/audio/2023/04/18/audio_7c1a67b245.mp3" type="audio/mpeg">
+    </audio>
   </div>
 
   <!-- KONTEN UTAMA -->
@@ -252,14 +256,19 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-    // Loader Logic
+    // Loader Logic + Musik
     window.addEventListener("load", () => {
       const loader = document.getElementById("loader");
       const main = document.getElementById("main-content");
+      const music = document.getElementById("loading-music");
+
       setTimeout(() => {
         loader.classList.add("hidden");
         main.classList.add("visible");
-      }, 1800);
+        // Hentikan musik saat dashboard muncul
+        music.pause();
+        music.currentTime = 0;
+      }, 3000);
     });
   </script>
 </body>
