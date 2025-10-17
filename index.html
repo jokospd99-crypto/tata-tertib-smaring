@@ -11,7 +11,6 @@
       background: linear-gradient(135deg, #f7f9fc, #e9f0fa);
       color: #333;
       line-height: 1.6;
-      opacity: 0;
       overflow-x: hidden;
     }
 
@@ -26,8 +25,12 @@
       justify-content: center;
       flex-direction: column;
       z-index: 9999;
-      animation: fadeOutLoader 0.8s ease-in-out forwards;
-      animation-delay: 2.3s;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #loader.hidden {
+      opacity: 0;
+      visibility: hidden;
     }
 
     #loader img {
@@ -50,20 +53,13 @@
       100% { transform: scale(1); opacity: 0.9; }
     }
 
-    @keyframes fadeOutLoader {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    /* === HALAMAN UTAMA === */
     main {
       opacity: 0;
-      animation: fadeInMain 2s ease-in-out forwards;
-      animation-delay: 2.3s;
+      transition: opacity 1.2s ease-in-out;
     }
 
-    @keyframes fadeInMain {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+    main.visible {
+      opacity: 1;
     }
 
     header {
@@ -72,13 +68,6 @@
       background: #004aad;
       color: white;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      animation: fadeDown 1.2s ease-out forwards;
-      animation-delay: 2.3s;
-    }
-
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     header img {
@@ -117,14 +106,8 @@
       background: white;
       border-radius: 15px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      opacity: 0;
       animation: fadeSection 1s ease-in-out forwards;
     }
-
-    section:nth-of-type(1) { animation-delay: 2.6s; }
-    section:nth-of-type(2) { animation-delay: 3s; }
-    section:nth-of-type(3) { animation-delay: 3.4s; }
-    section:nth-of-type(4) { animation-delay: 3.8s; }
 
     @keyframes fadeSection {
       from { opacity: 0; transform: translateY(20px); }
@@ -154,14 +137,6 @@
       background: #f1f5fb;
       margin-top: 30px;
       color: #555;
-      opacity: 0;
-      animation: fadeFooter 1.5s ease-in-out forwards;
-      animation-delay: 4.2s;
-    }
-
-    @keyframes fadeFooter {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .arabic {
@@ -184,7 +159,7 @@
   </div>
 
   <!-- KONTEN UTAMA -->
-  <main>
+  <main id="main-content">
     <header>
       <a href="https://ibb.co.com/xKfZBy7w">
         <img src="https://i.ibb.co.com/Q7C0TZKh/SMAN1-Cluring-emblem.png" alt="SMAN1-Cluring-emblem" />
@@ -238,24 +213,29 @@
       const now = new Date();
       const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
       const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-      
       const dayName = days[now.getDay()];
       const day = now.getDate();
       const month = months[now.getMonth()];
       const year = now.getFullYear();
-      
       const hours = now.getHours().toString().padStart(2, '0');
       const minutes = now.getMinutes().toString().padStart(2, '0');
       const seconds = now.getSeconds().toString().padStart(2, '0');
-      
       const formattedTime = `${hours}:${minutes}:${seconds}`;
       const formattedDate = `${dayName}, ${day} ${month} ${year}`;
-      
       document.getElementById('datetime').innerHTML = `${formattedDate} | 🕒 ${formattedTime}`;
     }
-
     setInterval(updateDateTime, 1000);
     updateDateTime();
+
+    // Loader Logic
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      const main = document.getElementById("main-content");
+      setTimeout(() => {
+        loader.classList.add("hidden");
+        main.classList.add("visible");
+      }, 1800);
+    });
   </script>
 </body>
 </html>
