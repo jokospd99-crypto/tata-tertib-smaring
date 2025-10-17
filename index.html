@@ -5,270 +5,174 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Pelanggaran - SMAN 1 Cluring</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-    /* === LATAR BERGERAK === */
     body {
-      font-family: "Poppins", sans-serif;
       margin: 0;
-      color: #333;
-      line-height: 1.6;
-      overflow-x: hidden;
-      background: linear-gradient(-45deg, #f7f9fc, #e9f0fa, #d6e4ff, #f4f7ff);
-      background-size: 400% 400%;
-      animation: gradientMove 15s ease infinite;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e1bee7);
+      overflow: hidden;
     }
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* === ANIMASI LOADING === */
-    #loader {
+    /* ==== LOADING SCREEN ==== */
+    #loading-screen {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, #003e91, #0074e4);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
       z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      transition: opacity 0.8s ease;
     }
 
-    #loader.hidden {
+    #loading-screen.fade-out {
       opacity: 0;
-      visibility: hidden;
+      pointer-events: none;
     }
 
-    #loader img {
-      width: 130px;
-      border-radius: 10px;
-      animation: pulse 2s infinite;
-    }
-
-    #loader p {
-      color: white;
-      font-size: 1.2em;
-      margin-top: 15px;
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
-
-    /* === TITIK ANIMASI "..." === */
-    #loading-text::after {
-      content: '';
-      display: inline-block;
-      width: 1em;
-      text-align: left;
-      animation: dots 1.5s steps(3, end) infinite;
-    }
-
-    @keyframes dots {
-      0%, 20% { content: ''; }
-      40% { content: '.'; }
-      60% { content: '..'; }
-      80%, 100% { content: '...'; }
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.9; }
-    }
-
-    main {
-      opacity: 0;
-      transition: opacity 1.2s ease-in-out;
-    }
-
-    main.visible {
-      opacity: 1;
-    }
-
-    /* === HEADER === */
-    header {
-      text-align: center;
-      padding: 30px 10px 10px;
-      background: #004aad;
-      color: white;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    header img {
+    #loading-screen img {
       width: 120px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      transition: transform 0.4s ease;
+      animation: spin 3s ease-in-out infinite alternate;
     }
 
-    header img:hover {
-      transform: scale(1.05);
+    @keyframes spin {
+      0% { transform: rotate(0deg) scale(1); }
+      100% { transform: rotate(360deg) scale(1.1); }
     }
 
-    h1 {
-      margin: 10px 0;
-      font-size: 1.8em;
-    }
-
-    h2 {
-      color: #004aad;
-      border-left: 4px solid #004aad;
-      padding-left: 10px;
-    }
-
-    #datetime {
-      font-size: 1em;
-      color: #fffa;
-      margin-top: 5px;
+    #loading-text {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #333;
       font-weight: 500;
     }
 
-    section {
-      max-width: 900px;
-      margin: 30px auto;
+    /* ==== DASHBOARD ==== */
+    .container {
+      opacity: 0;
+      animation: fadeIn 1.2s ease-in forwards;
+      display: none;
       padding: 20px;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      animation: fadeSection 1s ease-in-out forwards;
     }
 
-    @keyframes fadeSection {
-      from { opacity: 0; transform: translateY(20px); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    a.button {
-      display: inline-block;
-      background: #004aad;
+    header {
+      background: rgba(63, 81, 181, 0.9);
       color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 30px;
-      margin: 10px 0;
-      transition: 0.3s;
+      padding: 15px;
+      border-radius: 0 0 15px 15px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }
 
-    a.button:hover {
-      background: #0074e4;
-      transform: scale(1.05);
+    header img {
+      width: 80px;
+      border-radius: 50%;
+    }
+
+    h1 {
+      margin: 10px 0 5px;
+      font-size: 24px;
+    }
+
+    .datetime {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      background: #f1f5fb;
-      margin-top: 30px;
-      color: #555;
+      font-size: 14px;
+      margin-top: 20px;
+      padding: 10px;
+      color: #444;
     }
 
-    .arabic {
-      font-size: 1.3em;
-      color: #0b6b25;
-      font-weight: bold;
-    }
-
-    .credit {
-      color: #004aad;
-      font-weight: 600;
+    .background-photo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://i.ibb.co.com/Q7C0TZKh/SMAN1-Cluring-emblem.png');
+      background-size: 180px;
+      background-repeat: no-repeat;
+      background-position: right bottom;
+      opacity: 0.08;
+      z-index: -1;
     }
   </style>
 </head>
 <body>
-  <!-- LOADER -->
-  <div id="loader">
-    <img src="https://i.ibb.co.com/Q7C0TZKh/SMAN1-Cluring-emblem.png" alt="SMAN1-Cluring-logo">
-    <p id="loading-text">Memuat Dashboard</p>
-    <!-- MUSIK LEMBUT -->
-    <audio id="loading-music" autoplay loop>
-      <source src="https://cdn.pixabay.com/audio/2023/04/18/audio_7c1a67b245.mp3" type="audio/mpeg">
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen">
+    <img src="https://i.ibb.co.com/Q7C0TZKh/SMAN1-Cluring-emblem.png" alt="Logo SMAN 1 Cluring">
+    <div id="loading-text">Memuat Dashboard...</div>
+    <audio id="loading-music" autoplay>
+      <source src="https://cdn.pixabay.com/download/audio/2023/01/26/audio_d9a14c4de7.mp3?filename=soft-piano-ambient-139759.mp3" type="audio/mp3">
     </audio>
   </div>
 
-  <!-- KONTEN UTAMA -->
-  <main id="main-content">
+  <!-- BACKGROUND -->
+  <div class="background-photo"></div>
+
+  <!-- DASHBOARD -->
+  <div class="container" id="dashboard">
     <header>
-      <img src="https://i.ibb.co.com/Q7C0TZKh/SMAN1-Cluring-emblem.png" alt="SMAN1-Cluring-emblem" />
-      <h1>📊 Dashboard Pelanggaran SMAN 1 Cluring</h1>
-      <p class="arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
-      <div id="datetime">Memuat waktu...</div>
-      <p>Sistem Pemantauan dan Rekapitulasi Pelanggaran Siswa Berbasis Google Apps Script</p>
+      <img src="https://i.ibb.co.com/Q7C0TZKh/SMAN1-Cluring-emblem.png" alt="Logo SMAN 1 Cluring" />
+      <h1>Dashboard Pelanggaran Siswa</h1>
+      <div class="datetime" id="datetime"></div>
+      <p><strong>Wali Kelas:</strong> Joko Irawan, S.Pd</p>
+      <p><strong>Email:</strong> jokospd99@guru.sma.belajar.id</p>
     </header>
 
-    <section>
-      <h2>🌐 Akses Aplikasi Langsung</h2>
-      <p>Klik tombol di bawah untuk membuka aplikasi dashboard:</p>
-      <a class="button" href="https://script.google.com/macros/s/AKfycby1dY6qEKh77hxP_HKjXLsH6GTjr0skIA7KHASIGz6TOcbvhnFB0BellU7HI2VKtE55/exec" target="_blank">🔗 Buka Dashboard Apps Script</a>
-      <p><em>Pastikan Anda memiliki izin akses jika aplikasi diset privat.</em></p>
-    </section>
-
-    <section>
-      <h2>🧠 Deskripsi Singkat</h2>
-      <ul>
-        <li>Menampilkan data pelanggaran siswa berdasarkan kategori dan tingkat pelanggaran</li>
-        <li>Statistik mingguan dan bulanan dalam bentuk <strong>grafik mini</strong></li>
-        <li>Form input pelanggaran dengan validasi otomatis</li>
-        <li>Integrasi dengan <strong>Google Spreadsheet</strong> untuk penyimpanan data</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>🧑‍🏫 Pengembang & Kontak</h2>
-      <p><strong>Nama Pengembang:</strong> Joko Irawan, S.Pd</p>
-      <p><strong>Sekolah:</strong> SMAN 1 Cluring</p>
-      <p><strong>Peran:</strong> Pengembang Aplikasi Dashboard & Fasilitator Pembelajaran Digital</p>
-      <p>📧 Email: <a href="mailto:jokospd99@guru.sma.belajar.id">jokospd99@guru.sma.belajar.id</a></p>
-    </section>
-
-    <section>
-      <h2>🕋 Doa Pembuka</h2>
-      <blockquote>
-        “Bismillāhir-raḥmānir-raḥīm. Segala puji bagi Allah yang telah memudahkan teknologi untuk kemaslahatan pendidikan.”
-      </blockquote>
-    </section>
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS0dkIu-4C5h-jeeaP2zyTafljsLzy33qO5vf8izy4QrHlnn3xYVsN_iHlABX7wT92X_6C1YcLizLIo/pubhtml?widget=true&amp;headers=false"></iframe>
 
     <footer>
-      <p>© 2025 <span class="credit">SMAN 1 Cluring</span> — Pengembang: Joko Irawan, S.Pd</p>
+      © 2025 SMAN 1 Cluring — Dashboard Pelanggaran Siswa
     </footer>
-  </main>
+  </div>
 
   <script>
     // Jam & tanggal otomatis
     function updateDateTime() {
       const now = new Date();
-      const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-      const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-      const dayName = days[now.getDay()];
-      const day = now.getDate();
-      const month = months[now.getMonth()];
-      const year = now.getFullYear();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      document.getElementById('datetime').innerHTML =
-        `${dayName}, ${day} ${month} ${year} | 🕒 ${hours}:${minutes}:${seconds}`;
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('datetime').textContent =
+        now.toLocaleDateString('id-ID', options) + ' | ' +
+        now.toLocaleTimeString('id-ID');
     }
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-    // Loader Logic + Musik
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("loader");
-      const main = document.getElementById("main-content");
-      const music = document.getElementById("loading-music");
-
+    // Loading screen
+    window.addEventListener('load', () => {
+      const loadingScreen = document.getElementById('loading-screen');
+      const dashboard = document.getElementById('dashboard');
+      const music = document.getElementById('loading-music');
+      
       setTimeout(() => {
-        loader.classList.add("hidden");
-        main.classList.add("visible");
-        // Hentikan musik saat dashboard muncul
+        loadingScreen.classList.add('fade-out');
         music.pause();
-        music.currentTime = 0;
-      }, 3000);
+        dashboard.style.display = 'block';
+      }, 3500); // waktu loading 3.5 detik
     });
   </script>
 </body>
