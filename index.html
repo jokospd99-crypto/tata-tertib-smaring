@@ -1,36 +1,173 @@
-<p align="center">
-  <a href="https://ibb.co.com/xKfZBy7w">
-    <img src="https://i.ibb.co.com/Q7C0TZKh/SMAN1-Cluring-emblem.png" alt="SMAN1-Cluring-emblem" width="150" border="0">
-  </a>
-</p>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Pelanggaran - SMAN 1 Cluring</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #f7f9fc, #e9f0fa);
+      color: #333;
+      line-height: 1.6;
+    }
 
-<h1 align="center">📊 Dashboard Pelanggaran SMAN 1 Cluring</h1>
+    header {
+      text-align: center;
+      padding: 30px 10px 10px;
+      background: #004aad;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
 
-<p align="center"><strong>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</strong></p>
+    header img {
+      width: 120px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
 
-<p align="center">
-  Sistem Pemantauan dan Rekapitulasi Pelanggaran Siswa berbasis Google Apps Script
-</p>
+    h1 {
+      margin: 10px 0;
+      font-size: 1.8em;
+    }
 
----
+    h2 {
+      color: #004aad;
+      border-left: 4px solid #004aad;
+      padding-left: 10px;
+    }
 
-## 🌐 Akses Aplikasi Langsung
+    section {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 
-🔗 [**Buka Dashboard Apps Script**](https://script.google.com/macros/s/AKfycby1dY6qEKh77hxP_HKjXLsH6GTjr0skIA7KHASIGz6TOcbvhnFB0BellU7HI2VKtE55/exec)
+    a.button {
+      display: inline-block;
+      background: #004aad;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      margin: 10px 0;
+      transition: 0.3s;
+    }
 
-> ⚠️ *Pastikan Anda memiliki izin akses (jika aplikasi diset privat oleh pengembang).*
+    a.button:hover {
+      background: #0074e4;
+    }
 
----
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
 
-## 🧠 Deskripsi Singkat
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
 
-Dashboard ini menampilkan:
-- Data pelanggaran siswa berdasarkan kategori dan tingkat pelanggaran  
-- Statistik mingguan dan bulanan dalam bentuk **grafik mini (mini charts)**  
-- Formulir input pelanggaran dengan validasi otomatis  
-- Integrasi langsung dengan **Google Spreadsheet** untuk penyimpanan data  
+    th {
+      background: #004aad;
+      color: white;
+    }
 
----
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      background: #f1f5fb;
+      margin-top: 30px;
+      color: #555;
+    }
 
-## 🗂️ Struktur Proyek
+    .arabic {
+      font-size: 1.3em;
+      color: #0b6b25;
+      font-weight: bold;
+    }
 
+    .credit {
+      color: #004aad;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="https://ibb.co.com/xKfZBy7w">
+      <img src="https://i.ibb.co.com/Q7C0TZKh/SMAN1-Cluring-emblem.png" alt="SMAN1-Cluring-emblem" />
+    </a>
+    <h1>📊 Dashboard Pelanggaran SMAN 1 Cluring</h1>
+    <p class="arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+    <p>Sistem Pemantauan dan Rekapitulasi Pelanggaran Siswa Berbasis Google Apps Script</p>
+  </header>
+
+  <section>
+    <h2>🌐 Akses Aplikasi Langsung</h2>
+    <p>Klik tombol di bawah untuk membuka aplikasi dashboard:</p>
+    <a class="button" href="https://script.google.com/macros/s/AKfycby1dY6qEKh77hxP_HKjXLsH6GTjr0skIA7KHASIGz6TOcbvhnFB0BellU7HI2VKtE55/exec" target="_blank">🔗 Buka Dashboard Apps Script</a>
+    <p><em>Pastikan Anda memiliki izin akses jika aplikasi diset privat.</em></p>
+  </section>
+
+  <section>
+    <h2>🧠 Deskripsi Singkat</h2>
+    <ul>
+      <li>Menampilkan data pelanggaran siswa berdasarkan kategori dan tingkat pelanggaran</li>
+      <li>Statistik mingguan dan bulanan dalam bentuk <strong>grafik mini</strong></li>
+      <li>Form input pelanggaran dengan validasi otomatis</li>
+      <li>Integrasi dengan <strong>Google Spreadsheet</strong> untuk penyimpanan data</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>📊 Struktur Data Spreadsheet</h2>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Nama Siswa</th>
+        <th>Kelas</th>
+        <th>Jenis Pelanggaran</th>
+        <th>Tingkat</th>
+        <th>Tanggal</th>
+        <th>Wali Kelas</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Contoh Siswa</td>
+        <td>XI-7</td>
+        <td>Seragam tidak lengkap</td>
+        <td>Ringan</td>
+        <td>17 Okt 2025</td>
+        <td>Bu Rini</td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>🧑‍🏫 Pengembang & Kontak</h2>
+    <p><strong>Nama Pengembang:</strong> Alamsah</p>
+    <p><strong>Sekolah:</strong> SMAN 1 Cluring</p>
+    <p><strong>Peran:</strong> Pengembang Aplikasi Dashboard & Fasilitator Pembelajaran Digital</p>
+    <p>📧 Email: <em>(isi dengan email Anda)</em></p>
+  </section>
+
+  <section>
+    <h2>🕋 Doa Pembuka</h2>
+    <blockquote>
+      “Bismillāhir-raḥmānir-raḥīm. Segala puji bagi Allah yang telah memudahkan teknologi untuk kemaslahatan pendidikan.”
+    </blockquote>
+  </section>
+
+  <footer>
+    <p>© 2025 <span class="credit">SMAN 1 Cluring</span> — Pengembang: Alamsah</p>
+  </footer>
+</body>
+</html>
